@@ -7,7 +7,7 @@ router.get('/drones', (req, res, next) => {
   // Iteration #2: List the drones
   Drone.find()
     .then(response => {
-      console.log("hola", response);
+      console.log("hola", { response });
       res.render("./../views/drones/list.hbs", { response });
     })
     .catch(error => console.log(error));
@@ -23,7 +23,7 @@ router.post('/drones/create', (req, res, next) => {
   Drone.create({ name, propellers, maxSpeed })
     /*.then(droneFromDB => console.log(`New drone created: ${droneFromDB.name}.` */
     .then(() => res.redirect('/drones'))
-    .catch(error => next(error));
+    .catch(error => res.redirect('/drones/create'));
 });
 
 router.get('/drones/:id/edit', (req, res, next) => {
