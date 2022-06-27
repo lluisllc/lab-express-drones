@@ -7,26 +7,23 @@ router.get('/drones', (req, res, next) => {
   // Iteration #2: List the drones
   Drone.find()
     .then(response => {
-      console.log("hola",response);
+      console.log("hola", response);
       res.render("./../views/drones/list.hbs", { response });
     })
     .catch(error => console.log(error));
 });
 
-router.get('/drones/create', (req, res, next) => {
-  // .then((res) => {
-  //   return Drone.create({
-  //     name: 'Halcon Milenario',
-  //     propellers: 111,
-  //     maxSpeed:420,
-  //   })
-  // })
-  // .catch((err) => console.log(err))
-});
+router.get('/drones/create', (req, res, next) => res.render('drones/create-form.hbs'));
+
 
 router.post('/drones/create', (req, res, next) => {
-  // Iteration #3: Add a new drone
-  // ... your code here
+  console.log(req.body);
+  const { name, propellers, maxSpeed } = req.body;
+
+  Drone.create({ name, propellers, maxSpeed })
+    /*.then(droneFromDB => console.log(`New drone created: ${droneFromDB.name}.` */
+    .then(() => res.redirect('/drones'))
+    .catch(error => next(error));
 });
 
 router.get('/drones/:id/edit', (req, res, next) => {
